@@ -1,0 +1,34 @@
+1、dubbo是什么
+
+答：dubbo是分布式服务的rpc框架，主要核心部件（Remoing网络通信框架、RPC、Registry）
+
+2、为什么要使用dubbo
+
+答：内部使用了netty、zookeeper，保证了高性能高可用性，垂直的应用服务越来越多，应用服务之间的交互不可避免，将核心的业务或者公共业务抽离出来，进一步提高业务的复用性
+并且分布式架构可以承受更大规模的并发流量
+
+
+3、dubbo与spring cloud 的区别
+
+答
+1、dubbo底层使用的netty的NIO框架，是基于TCP协议传输，配合Hession完成序列化的rpc框架
+2、spring cloud是基于http协议+rest接口实现远程调用，相对来说http发送的报文更大，更占用带宽
+
+4、dubbo支持什么协议，推荐使用哪一种
+
+dubbo、rmi、http、hessian、webservice、redis,推荐使用dubbo协议
+
+5、为什么要使用单一长连接？
+
+答：保证了单一的消费者不会压垮提供者，长连接减少了连接握手验证等，并使用异步IO,
+	可以复用线程池，防止了C10K问题（防止线程资源浪费）
+
+6、dubbo需要web容器吗？
+
+答：不需要，dubbo服务容器只需要一个简单的main方法，并加载一个简单的spring容器，用于暴露服务
+
+如果硬要用 Web 容器，只会增加复杂性，也浪费资源。
+
+7、dubbo内置了哪几种服务容器？
+
+答：

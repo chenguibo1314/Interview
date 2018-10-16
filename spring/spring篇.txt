@@ -1,0 +1,30 @@
+一、spring篇
+
+1、spring框架的概念
+答：spring是一个开源框架，可以接管web层、业务层、dao层，并且可以可以配置bean，其核心就是控制反转（IOC）、和面向切面（AOP）
+
+2、IOC：就是把创建对象和维护对象之间的关系交给spring
+
+3、手动加载applicationContext方法：new ClassPathXmlApplicationContext("applicationContext.xml")，获取ApplicationContext对象
+
+     容器自动加载applicationContext方法：这个时候spring容器种的bean对象被传建到内存中
+
+4、spring的好处
+
+	1、控制反转：松耦合、无需自身实例化对象
+	2、面向切面编程：实现业务逻辑与系统服务分开（eg:性能监测、事务管理、日志打印、缓存、访问控制）
+	3、管理应用中对象的生命周期和配置
+	4、事务管理
+5、BeanFactory是spring为基础的应用核心，BeanFactory实现XmlBeanFactory
+
+6、spring中的设计模式
+	工厂模式：spring中的beanFactory,根据传入的唯一标识来获取bean对象
+	单例模式：spring中保证了一个类只有一个实列，也可以通过scope属性动态配置对象的属性（sigleton、prototype、request、session、goble session）
+	适配器模式：
+	包装器模式：
+	代理模式：为其他对象提供一种代理，使其可以控制这个对象的访问（eg:jdk动态代理）
+	观察者模式：这种模式主要应用在listener的实现，对象之间是一对多的依赖关系，当一个状态发生变化的时候其他对象可以得到通知并修改
+	策略模式：
+	模板模式：
+	
+   

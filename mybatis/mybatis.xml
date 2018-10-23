@@ -17,9 +17,15 @@
 			<if test="id != null and id != ''">
 				AND ID=#{id , jdbcType=NUMERIC}
 			</if>	
+			<!--小于或者等于-->
 			 <if test="workFinishTm != null">
               			AND work_finish_tm <![CDATA[<]]><![CDATA[=]]> #{workFinishTm, jdbcType=TIMESTAMP}
           		</if>
+			<!--模糊like-->
+			<if test="newAddrPlaceDesc!=null and newAddrPlaceDesc!='' ">
+   				AND new_addr_place LIKE CONCAT('%',#{newAddrPlaceDesc, jdbcType=VARCHAR},'%')
+			</if>
+			<!--查询in-->
 			<if test="cityNameList != null and cityNameList != ''">
 			    AND CITY_NAME IN
 			    <foreach collection="cityNameList" item="cityNameItem" open="(" close=")" separator=",">

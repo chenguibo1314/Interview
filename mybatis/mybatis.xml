@@ -16,7 +16,10 @@
 		<trim prefix=" WHERE  " prefixOverrides="AND">
 			<if test="id != null and id != ''">
 				AND ID=#{id , jdbcType=NUMERIC}
-			</if>		
+			</if>	
+			 <if test="workFinishTm != null">
+              			AND work_finish_tm <![CDATA[<]]><![CDATA[=]]> #{workFinishTm, jdbcType=TIMESTAMP}
+          		</if>
 			<if test="cityNameList != null and cityNameList != ''">
 			    AND CITY_NAME IN
 			    <foreach collection="cityNameList" item="cityNameItem" open="(" close=")" separator=",">

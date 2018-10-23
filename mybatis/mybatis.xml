@@ -79,7 +79,7 @@
 	</update>
 	
 	<!--批量更新-->
-	<update id="batchUpdate" parameterType="com.scam.order.dto.scamOrder">
+	<update id="batchUpdate" parameterType="java.util.List">
        <foreach collection="list" item="item" open="" close="" separator=";" >
              update scam_order
 	         <set>

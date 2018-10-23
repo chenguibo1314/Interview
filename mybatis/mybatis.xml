@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.fcbox.scam.order.dao.FcScamOrderMapper">
-	<resultMap id="BaseResultMap" type="com.fcbox.scam.order.dto.FcScamOrder">
+<mapper namespace="com.scam.order.dao.scamOrderMapper">
+	<resultMap id="BaseResultMap" type="com.scam.order.dto.scamOrder">
 		<result property="id" column="ID" jdbcType="NUMERIC" />
 		<result property="orderId" column="ORDER_ID" jdbcType="VARCHAR" />
 		<result property="siteId" column="SITE_ID" jdbcType="VARCHAR" />
@@ -12,12 +12,11 @@
 	</sql>
 	
 	<!--where条件-->
-	<sql id="fcScamOrder_Where_Clause">
+	<sql id="scamOrder_Where_Clause">
 		<trim prefix=" WHERE  " prefixOverrides="AND">
 			<if test="id != null and id != ''">
 				AND ID=#{id , jdbcType=NUMERIC}
-			</if>
-			
+			</if>		
 			<if test="cityNameList != null and cityNameList != ''">
 			    AND CITY_NAME IN
 			    <foreach collection="cityNameList" item="cityNameItem" open="(" close=")" separator=",">
@@ -32,20 +31,20 @@
 		parameterType="java.lang.Integer">
 		select
 		<include refid="Base_Column_List" />
-		from fc_scam_order
+		from scam_order
 		where ID = #{id,jdbcType=INTEGER}
 	</select>
 	
 	<!--删除-->
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
 		delete from
-		fc_scam_order
+		scam_order
 		where ID = #{id,jdbcType=INTEGER}
 	</delete>
 	
 	<!--单个插入-->
-	<insert id="insert" parameterType="com.fcbox.scam.order.dto.FcScamOrder">
-		INSERT INTO fc_scam_order (
+	<insert id="insert" parameterType="com.scam.order.dto.scamOrder">
+		INSERT INTO scam_order (
 		ID,
 		ORDER_ID,
 		SITE_ID
@@ -55,7 +54,7 @@
 	
 	<!--批量插入-->
 	<insert id="batchInsertOrders" parameterType="java.util.List">
-		INSERT INTO fc_scam_order (ID,ORDER_ID,SITE_ID,CHANGE_ORDER_ID)
+		INSERT INTO scam_order (ID,ORDER_ID,SITE_ID,CHANGE_ORDER_ID)
 		<foreach collection="list" item="item" index="index" separator="union all">
 			select #{item.id, jdbcType=NUMERIC},#{item.orderId, jdbcType=VARCHAR},#{item.siteId, jdbcType=VARCHAR},#{item.changeOrderId, jdbcType=NUMERIC}
 			from dual
@@ -63,8 +62,8 @@
 	</insert>
 	
 	<!--单个更新-->
-	<update id="updateByPrimaryKeySelective" parameterType="com.fcbox.scam.order.dto.FcScamOrder">
-		update fc_scam_order
+	<update id="updateByPrimaryKeySelective" parameterType="com.fcbox.scam.order.dto.scamOrder">
+		update scam_order
 		<set>
 			<if test="orderId !=null and orderId !=''">
 				ORDER_ID=#{orderId , jdbcType=VARCHAR},
@@ -77,9 +76,9 @@
 	</update>
 	
 	<!--批量更新-->
-	<update id="batchUpdate" parameterType="com.fcbox.scam.order.dto.FcScamOrder">
+	<update id="batchUpdate" parameterType="com.scam.order.dto.scamOrder">
        <foreach collection="list" item="item" open="" close="" separator=";" >
-             update fc_scam_order
+             update scam_order
 	         <set>
 	         	 <if test="item.changeOrderId!=null">
 	               CHANGE_ORDER_ID=#{item.changeOrderId , jdbcType=NUMERIC},

@@ -1,30 +1,100 @@
-һ��springƪ
+1、spring框架的概念？
+答：
+1、spring是一个开源框架，可以接管web层、业务层、dao层，并且可以可以配置bean，其核心就是控制反转（IOC）、和面向切面（AOP）
+2、IOC：就是把创建对象和维护对象之间的关系交给spring
+3、DI:依赖注入是指spring在创建对象的时候将依赖对象属性通过配置文件进行注入
+4、AOP:AOP提供了切面。切面对关注点进行模块化，例如横切多个类型和对象的事务管理
 
-1��spring��ܵĸ���
-��spring��һ����Դ��ܣ����Խӹ�web�㡢ҵ��㡢dao�㣬���ҿ��Կ�������bean������ľ��ǿ��Ʒ�ת��IOC�������������棨AOP��
+2、spring的好处
+答：
+1、控制反转：松耦合、无需自身实例化对象
+2、面向切面编程：实现业务逻辑与系统服务分开（eg:性能监测、事务管理、日志打印、缓存、访问控制）
+3、管理应用中对象的生命周期和配置
+4、事务管理
 
-2��IOC�����ǰѴ��������ά������֮��Ĺ�ϵ����spring
+3、BeanFactory 接口和 ApplicationContext 接口有什么区别 ？
+答：
+1、ApplicationContext 接口继承BeanFactory接口，Spring核心工厂是BeanFactory ,BeanFactory采取延迟加载，
+BeanFactory实现XmlBeanFactory，第一次getBean时才会初始化Bean, ApplicationContext是会在加载配置文件时初始化Bean，
+spring容器中的bean对象被传建到内存中。
+2、ApplicationContext是对BeanFactory扩展，开发中基本都在使用ApplicationContext, web项目使用WebApplicationContext ，很少用到BeanFactory
+3、手动加载applicationContext方法：new ClassPathXmlApplicationContext("applicationContext.xml")，获取ApplicationContext对象
 
-3���ֶ�����applicationContext������new ClassPathXmlApplicationContext("applicationContext.xml")����ȡApplicationContext����
+4、spring中的设计模式
+答：
+1、工厂模式：spring中的beanFactory,根据传入的唯一标识来获取bean对象
+2、单例模式：spring中保证了一个类只有一个实列，也可以通过scope属性动态配置对象的属性（sigleton、prototype、request、session、goble session）
+3、适配器模式：
+4、包装器模式：
+5、代理模式：为其他对象提供一种代理，使其可以控制这个对象的访问（eg:jdk动态代理）
+6、观察者模式：这种模式主要应用在listener的实现，对象之间是一对多的依赖关系，当一个状态发生变化的时候其他对象可以得到通知并修改
+7、策略模式：
+8、模板模式：
 
-     �����Զ�����applicationContext���������ʱ��spring�����ֵ�bean���󱻴������ڴ���
+5、springMVC的请求原理?
+答：
+1、用户发送请求到dispatchSevelet前端控制器，前端控制器调用MappingHandle处理器映射器请求handle（controller）
+2、返回handle到前端控制器
+3、dispatchSevelet前端控制器调用处理器适配器来处理handle，
+4、处理完之后返回model and view 给前端控制器
+5、前端控制器调用试图解析器处理model and view 
+6、最后将处理完的结果response给用户	
 
-4��spring�ĺô�
+6、spring的反射机制
+答：
+主要通过配置文件读取到类名，然后通过Class.forName(类名路径).newInstance()来获取实例对象
 
-	1�����Ʒ�ת������ϡ���������ʵ��������
-	2�����������̣�ʵ��ҵ���߼���ϵͳ����ֿ���eg:���ܼ�⡢�����������־��ӡ�����桢���ʿ��ƣ�
-	3������Ӧ���ж�����������ں�����
-	4���������
-5��BeanFactory��springΪ������Ӧ�ú��ģ�BeanFactoryʵ��XmlBeanFactory
+7、spring配置bean实例化有哪些方式？
+答：
+1、使用类构造器实例化(默认无参数)
+2、使用静态工厂方法实例化(简单工厂模式)
+eg:<bean id="bean1" class="cn.itcast.spring.b_instance.Bean1"></bean>
+3、使用实例工厂方法实例化(工厂方法模式)
+eg:<bean id="bean2" class="cn.itcast.spring.b_instance.Bean2Factory" factory-method="getBean2"></bean>
 
-6��spring�е����ģʽ
-	����ģʽ��spring�е�beanFactory,���ݴ����Ψһ��ʶ����ȡbean����
-	����ģʽ��spring�б�֤��һ����ֻ��һ��ʵ�У�Ҳ����ͨ��scope���Զ�̬���ö�������ԣ�sigleton��prototype��request��session��goble session��
-	������ģʽ��
-	��װ��ģʽ��
-	����ģʽ��Ϊ���������ṩһ�ִ�����ʹ����Կ����������ķ��ʣ�eg:jdk��̬������
-	�۲���ģʽ������ģʽ��ҪӦ����listener��ʵ�֣�����֮����һ�Զ��������ϵ����һ��״̬�����仯��ʱ������������Եõ�֪ͨ���޸�
-	����ģʽ��
-	ģ��ģʽ��
-	
-   
+8、spring bean的初始化有两种方法?
+答：
+1、在配置文件<bean>标签中通过指定init-method属性来完成
+2、类实现org.springframwork.beans.factory.InitializingBean接口
+
+9、spring 作用域有哪5种？
+答：
+1、singleton 2、prototype 3、request 4、session 5、goble session
+
+10、简单的说一下spring的生命周期？
+答：
+1、在配置<bean>元素中，指定bean初始化方法init-method,和销毁方法destroy-method
+eg:<beanid="lifeCycleBean"class="cn.itcast.spring.d_lifecycle.LifeCycleBean"init-method="setup"destroy-method="teardown"></bean>
+2、bean的完整生命周期过程
+A:bean对象实例化
+B:封装对象属性
+C:如果Bean实现BeanNameAware 执行 setBeanName
+D:如果Bean实现BeanFactoryAware 或者 ApplicationContextAware 设置工厂 setBeanFactory 或者上下文对象 setApplicationContext
+E:如果存在类实现 BeanPostProcessor（后处理Bean） ，执行postProcessBeforeInitialization，BeanPostProcessor接口提供钩子函数，用来动态扩展修改Bean
+F:如果Bean实现InitializingBean 执行 afterPropertiesSet
+G:调用<bean init-method="init"> 指定初始化方法 init
+H:如果存在类实现 BeanPostProcessor（处理Bean） ，执行postProcessAfterInitialization
+I:执行业务
+J:调用<bean destroy-method="customerDestroy"> 指定销毁方法 customerDestroy
+
+11、Bean注入属性有哪几种方式？
+答：
+1、接口注入
+2、构造器注入：通过 <constructor-arg> 元素完成注入
+3、set注入：通过<property> 元素完成注入【开发中常用方式】
+
+12、Spring的核心类有哪些，各有什么作用？
+答：
+1、BeanFactory：产生一个新的实例，可以实现单例模式
+2、BeanWrapper：提供统一的get及set方法
+3、ApplicationContext:提供框架的实现，包括BeanFactory的所有功能
+
+13、Spring如何处理线程并发问题？
+答：
+1、我们知道只有无状态的bean才可以在多线程环境下共享，ThreadLocal和线程同步机制都是为了解决多线程中相同变量的访问冲突问题
+2、ThreadLocal：Thread Local为每个线程提供一个变量副本，从而隔离的多线程对数据访问的冲突，因为每一个线程都拥有自己的变量副本，
+从而也就没有必要对该变量进行同步了
+3、线程同步机制：对象的所机制保证了同一时间只有一个对象访问变量，程序设计复杂、效率较低
+4、对于多线程资源共享的问题，同步机制采用了“以时间换空间”的方式，而ThreadLocal采用了“以空间换时间”的方式
+
+

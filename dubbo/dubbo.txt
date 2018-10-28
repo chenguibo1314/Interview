@@ -1,113 +1,120 @@
-1��dubbo��ʲô
-��dubbo�Ƿֲ�ʽ�����rpc��ܣ���Ҫ���Ĳ�����Remoing����ͨ�ſ�ܡ�RPC��Registry��
+1、dubbo是什么
+答：dubbo是分布式服务的rpc框架，主要核心部件（Remoing网络通信框架、RPC、Registry）
 
-2��ΪʲôҪʹ��dubbo
-���ڲ�ʹ����netty��zookeeper����֤�˸����ܸ߿����ԣ���ֱ��Ӧ�÷���Խ��Խ�࣬Ӧ�÷���֮��Ľ������ɱ��⣬�����ĵ�ҵ����߹���ҵ������������һ�����ҵ��ĸ�����
-���ҷֲ�ʽ�ܹ����Գ��ܸ����ģ�Ĳ�������
+2、为什么要使用dubbo
+答：内部使用了netty、zookeeper，保证了高性能高可用性，垂直的应用服务越来越多，应用服务之间的交互不可避免，将核心的业务或者公共业务抽离出来，进一步提高业务的复用性
+并且分布式架构可以承受更大规模的并发流量
 
-3��dubbo��spring cloud ������
-��
-1��dubbo�ײ�ʹ�õ�netty��NIO��ܣ��ǻ���TCPЭ�鴫�䣬���Hession������л���rpc���
-2��spring cloud�ǻ���httpЭ��+restFul�ӿ�ʵ��Զ�̵��ã������˵http���͵ı��ĸ��󣬸�ռ�ô���
+3、dubbo与spring cloud 的区别
+答：
+1、dubbo底层使用的netty的NIO框架，是基于TCP协议传输，配合Hession完成序列化的rpc框架
+2、spring cloud是基于http协议+restFul接口实现远程调用，相对来说http发送的报文更大，更占用带宽
 
-4��dubbo֧��ʲôЭ�飬�Ƽ�ʹ����һ�֣�dubbo֧�ֶ�Э����
-��dubbo��rmi��http��hessian��webservice��redis,�Ƽ�ʹ��dubboЭ�飬dubbo֧�ֶ�Э�飬֧��ͬһ�������ö�Э��
+4、dubbo支持什么协议，推荐使用哪一种？dubbo支持多协议吗
+答：dubbo、rmi、http、hessian、webservice、redis,推荐使用dubbo协议，dubbo支持多协议，支持同一服务配置多协议
 
-5��ΪʲôҪʹ�õ�һ�����ӣ�
-�𣺱�֤�˵�һ�������߲���ѹ���ṩ�ߣ������Ӽ���������������֤�ȣ���ʹ���첽IO,
-	���Ը����̳߳أ���ֹ��C10K���⣨��ֹ�߳���Դ�˷ѣ�
+5、为什么要使用单一长连接？
+答：保证了单一的消费者不会压垮提供者，长连接减少了连接握手验证等，并使用异步IO,
+	可以复用线程池，防止了C10K问题（防止线程资源浪费）
 
-6��dubbo��Ҫweb������
-�𣺲���Ҫ��dubbo��������ֻ��Ҫһ���򵥵�main������������һ���򵥵�spring���������ڱ�¶����
-���ӲҪ�� Web ������ֻ�����Ӹ����ԣ�Ҳ�˷���Դ��
+6、dubbo需要web容器吗？
+答：不需要，dubbo服务容器只需要一个简单的main方法，并加载一个简单的spring容器，用于暴露服务，
+如果硬要用 Web 容器，只会增加复杂性，也浪费资源。
 
-7��dubbo�������ļ��ַ���������
-��1��Spring Container;2��jetty Container;3��Log4j Container
+7、dubbo内置了哪几种服务容器？
+答：1、Spring Container;2、jetty Container;3、Log4j Container
 
-8��netty�ļ���IO�߳�ģʽ��BIO��NIO��AIO��
-��IO�ķ�ʽͨ����Ϊ���֣�ͬ��������BIO��ͬ����������NIO���첽��������AIO��
+8、netty的几种IO线程模式（BIO、NIO、AIO）
+答：IO的方式通常分为几种，同步阻塞的BIO、同步非阻塞的NIO、异步非阻塞的AIO。
 
-BIO(ͬ������):һ�����Ӷ�Ӧһ���߳�
+BIO(同步阻塞):一个连接对应一个线程
 
-NIO(ͬ��������)������Ҫһ�����Ӷ�Ӧһ���̣߳�������������Ӷ��ᱻע�ᵽ��·���������棬
-����·��������ѯ����ʱ�򣬲ſ���һ���߳̽��д���
+NIO(同步非阻塞)：不需要一个连接对应一个线程，所有请求的连接都会被注册到多路复用器上面，
+当多路复用器轮询到的时候，才开启一个线程进行处理
 
-AIO(�첽������):
+AIO(异步非阻塞):
 
-9��dubbo���ļ������÷�ʽ��������������Щ��
-��1��spring���÷�ʽ��2��Java API���÷�ʽ
+9、dubbo有哪几种配置方式？核心配置有哪些？
+答：1、spring配置方式；2、Java API配置方式
 
-10��dubbo���������������������û���ô����
-��dubbo����ʱ��Ĭ�Ͻ��м�飬�����û��׳��쳣����ֹspring���г�ʼ��
-�����ù�check="false"�رռ��
+10、dubbo如果启动是如果依赖不可用会怎么样？
+答：dubbo启动时会默认进行检查，不可用会抛出异常，阻止spring进行初始化
+可以用过check="false"关闭检查
 
-11��dubboʹ�õ����л������ʲô�������������л���ʽ��
-���Ƽ�ʹ��hessian��Ĭ�ϣ����л�������dubbo��FastJson��java�Դ����л�
+11、dubbo使用的序列化框架是什么？还有其他序列化方式吗？
+答：推荐使用hessian（默认）序列化，还有dubbo、FastJson、java自带序列化
 
-12����һ���ӿ��ж���ʵ�ֵ�ʱ����ô������������������μ����ϰ汾����dubbo���ԶԽ�����л�����
-�𣺿���ʹ��group���飬����ʹ�ð汾�ţ�dubbo���ԶԽ�����л��棬dubbo�ṩ������ʽ����
+12、当一个接口有多种实现的时候怎么处理？，服务上线如何兼容老版本？，dubbo可以对结果进行缓存吗
+答：可以使用group分组，可以使用版本号，dubbo可以对结果进行缓存，dubbo提供了声明式缓存
 
-13���㻹�˽��ķֲ�ʽ�����
-�𣺱�Ļ��� Spring cloud��Facebook �� Thrift��Twitter �� Finagle �ȡ�
+13、你还了解别的分布式框架吗？
+答：别的还有 Spring cloud、Facebook 的 Thrift、Twitter 的 Finagle 等。
 
-14��˵˵ Dubbo ����¶�Ĺ��̡�
-��Dubbo ���� Spring ʵ������ bean ֮����ˢ���������һ������ ContextRefreshEvent �¼���ʱ��֪ͨʵ���� ApplicationListener �� ServiceBean ����лص� onApplicationEvent �¼�������Dubbo ������������е��� ServiceBean ���� ServiceConfig �� export ���������÷�������ʵ���˷���ģ��첽���߷��첽��������
+14、说说 Dubbo 服务暴露的过程。
+答：Dubbo 会在 Spring 实例化完 bean 之后，在刷新容器最后一步发布 ContextRefreshEvent 事件的时候，通知实现了 ApplicationListener 的 ServiceBean 类进行回调 onApplicationEvent 事件方法，Dubbo 会在这个方法中调用 ServiceBean 父类 ServiceConfig 的 export 方法，而该方法真正实现了服务的（异步或者非异步）发布。
 
-export�����飺
-1����鲢������������Ϣ
-2����������ע�����ģ���¶����ע������ȥ
-3���������õ�Э���ע������url�ֱ���е���
-4�����������ļ������м��
-5����ȡInvoker
-6��ת���ɶ����Exporter,��������
+export步骤简介：
+1、检查并填充各种属性信息
+2、加载所有注册中心，暴露服务到注册中心去
+3、根据配置的协议和注册中心url分别进行导出
+4、导出配置文件并进行检查
+5、获取Invoker
+6、转化成对外的Exporter,缓存起来
 
-15����ν��������������������⣿
-��Dubbo ����ʹ�� Pinpoint �� Apache Skywalking(Incubator) ʵ�ֲַ�ʽ����׷�٣���Ȼ���������ܶ෽����
+15、如何解决服务调用链过长的问题？
+答：Dubbo 可以使用 Pinpoint 和 Apache Skywalking(Incubator) 实现分布式服务追踪，当然还有其他很多方案。
 
-16�������ṩ����ʵ��ʧЧ�߳���ʲôԭ����
-�𣺷���ʧЧ�߳����� Zookeeper ����ʱ�ڵ�ԭ����dubbo��֧�ֲַ�ʽ����
+16、服务提供者能实现失效踢出是什么原理？
+答：服务失效踢出基于 Zookeeper 的临时节点原理，dubbo不支持分布式事务
 
-17��dubbo����֮��ĵ�������������
-��Ĭ����ͬ���ȴ����������֧���첽���á�
-dubbo�ǻ���NIO�ķ�����ʵ�ֲ��е��ã��ͻ��˲���Ҫ
-�������߳̾Ϳ�����ɲ��е��ö��Զ�̷���
-��Զ��߳̿�����С���첽���û᷵��һ��Future����
+17、dubbo服务之间的调用是阻塞的吗？
+答：默认是同步等待结果阻塞，支持异步调用。
+dubbo是基于NIO的非阻塞实现并行调用，客户端不需要
+启动多线程就可以完成并行调用多个远程服务，
+相对多线程开销较小，异步调用会返回一个Future对象
 
-18��dubbo�����ָ��ؾ�����ԣ�Ĭ�����Ǹ���
-�����ģʽ����ѯģʽ�����ٻ�Ծ��������һ��hash��Ĭ�������ģʽ
+18、dubbo的四种负载均衡策略？默认是那个？
+答：随机模式、轮询模式、最少活跃调用数、一至hash；默认是随机模式
 
-19��Dubbo���ļ��ּ�Ⱥ�ݴ�������Ĭ�������֣�
-��
-1. failover��Ĭ�ϣ��� 
-ʧ���Զ��л�������������������ͨ�����ڲ�ѯ������Ĭ������2��
+19、Dubbo有哪几种集群容错方案，默认是哪种？
+答：
+1. failover（默认）： 
+失败自动切换，重试其他服务器，通常用于查询操作，默认重试2次
 2. failfast 
-������ʧ�ܣ�ֻ����һ�ε��ã�ʧ�ܾͱ�����ͨ������������¼�Ĳ�������������ͬ���� 
+：快速失败，只发起一次调用，失败就报错，通常用于新增记录的操作，比如数据同步。 
 3. failsafe 
-��ʧ�ܰ�ȫ�������쳣ֱ�Ӻ��ԣ�Ҳ���Ƕ����ݵ�������Ҫ�󲻸ߣ�ͨ������д�������־�Ȳ��� 
+：失败安全，出现异常直接忽略，也就是对数据的完整性要求不高，通常用于写入审计日志等操作 
 
-4. failback ��
-ʧ���Զ��ָ���ʧ�ܺ��̨��¼ʧ�ܵ����󣬶�ʱ�ط���ͨ������ʵʱ��Ҫ�󲻸ߵ�֪ͨ����� 
+4. failback ：
+失败自动恢复，失败后后台记录失败的请求，定时重发，通常用于实时性要求不高的通知类操作 
 
-5. forking�� 
-���е��ã�ͬʱ���ö����������ֻҪ��һ�����سɹ����ɣ�ͨ������ʵʱ��Ҫ��ߵĲ�ѯ������
-���Ƕ���Դ���˷Ѹ��󣬾��岢�м������Ը���forks=n���� 
+5. forking： 
+并行调用，同时调用多个服务器，只要有一个返回成功即可，通常用于实时性要求高的查询操作，
+但是对资源的浪费更大，具体并行几个可以根据forks=n设置 
 
 6. broadcast 
-���㲥���������ṩ�ߣ�������ã���һ̨�����ͱ�����ͨ�����ڸ��������ṩ�߻��������־��
-������Դ��Ϣ���õĻ�����٣����Ҹ���ʧ�ܵĻ���ϵͳӰ���С����Դ
+：广播调用所有提供者，逐个调用，有一台报错就报错，通常用于更新所有提供者缓存或者日志等
+本地资源信息，用的机会较少，并且更新失败的话对系统影响很小的资源
 
-20������� Dubbo ��Դ����ʹ����������ʲô���⣿
-��
-dubbo����ƾ���Ϊ������߲���С��������rpc���ã������������������������ܲ��Ǻܺ�
+20、你读过 Dubbo 的源码吗？使用中遇到过什么问题？
+答：
+dubbo的设计就是为了满足高并发小数据量的rpc调用，当大数据量传输的情况下性能不是很好
 
-21��dubbo������������
-��
-1�����������������������ء����з����ṩ�ߣ�����ڵ����
-2�������ṩ��������ʱ����ע������ע���Լ��ṩ�ķ���
-3������������������ʱ����ע�����Ķ����Լ�����ķ���
-4��ע�����ķ��ط����ṩ�ߵ�ַ�б��������ߣ�����б����ע�����Ľ����ڳ��������ͱ�����ݸ������ߡ�
-5�����������ߣ����ṩ�ߵ�ַ�б��У����������ؾ����㷨��ѡһ̨�ṩ�߽��е��ã��������ʧ�ܣ���ѡ��һ̨���á�
-6�����������ߺ��ṩ�ߣ����ڴ����ۼƵ��ô����͵���ʱ�䣬��ʱÿ���ӷ���һ��ͳ�����ݵ�������ġ�
+21、dubbo服务启动过程
+答：
+1、服务容器负责启动、加载、运行服务提供者（多个节点服务）
+2、服务提供者在启动时，向注册中心注册自己提供的服务。
+3、服务消费者在启动时，向注册中心订阅自己所需的服务。
+4、注册中心返回服务提供者地址列表给消费者，如果有变更，注册中心将基于长连接推送变更数据给消费者。
+5、服务消费者，从提供者地址列表中，基于软负载均衡算法，选一台提供者进行调用，如果调用失败，再选另一台调用。
+6、服务消费者和提供者，在内存中累计调用次数和调用时间，定时每分钟发送一次统计数据到监控中心。
+
+22、使用rpc的好处？
+答：
+1. 如果我们开发简单的单一应用，逻辑简单、用户不多、流量不大，那我们用不着;
+2. 当我们的系统访问量增大、业务增多时，我们会发现一台单机运行此系统已经无法承受。此时，我们可以将业务拆分成几个互不关联的应用，分别部署在各自机器上，以划清逻辑并减小压力。此时，我们也可以不需要RPC，因为应用之间是互不关联的。
+3. 当我们的业务越来越多、应用也越来越多时，自然的，我们会发现有些功能已经不能简单划分开来或者划分不出来。此时，可以将公共业务逻辑抽离出来，将之组成独立的服务Service应用 。而原有的、新增的应用都可以与那些独立的Service应用 交互，以此来完成完整的业务功能。所以此时，我们急需一种高效的应用程序之间的通讯手段来完成这种需求，所以你看，RPC大显身手的时候来了！
+其实3描述的场景也是服务化 、微服务 和分布式系统架构 的基础场景。即RPC框架就是实现以上结构的有力方式。
 
 
 

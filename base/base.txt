@@ -1,308 +1,306 @@
-һ��java����
+一、java基础
 
-
-
-1. ���ֻ����������͵Ĵ�С���Լ����ǵķ�װ�ࡣ
-��:
+1. 九种基本数据类型的大小，以及他们的封装类。
+答:
 byte\short\int\float\double\long\boolean\char\void
 Byte\Short\Integer\Float\Double\Long\Boolean\Character\Void
 
 
-2. Switch�ܷ���string��������
-��:
-������������������ʽ��JDK1.5��ʼ֧��Enum�࣬JDK1.7��ʼ֧��String,��string������Ϊnullֵ����
+2. Switch能否用string做参数？
+答:
+参数可以是整数表达式，JDK1.5开始支持Enum类，JDK1.7开始支持String,且string不能作为null值传入
 
 
-3. equals��==������
-��:
-equals�Ƚϵ��������������õ�ֵ��
-==�ǱȽϻ����������͵�ֵ���ұȽϵ�����������ĵ�ֵַ
+3. equals与==的区别。
+答:
+equals比较的是两个对象引用的值，
+==是比较基本数据类型的值，且比较的是两个对象的地址值
 
 
-4. Object����Щ���÷�����
-��:
-clone,ʵ�ֶ����ǳ����
-equals��������Ҫ��д�÷���
-hashCode��ʵ�ֹ�ϣ����
-getClass��final�������������ʱ����
-wait��һֱ�ȴ���ֱ����ȡ�ö������
-notify�������ڸö���ȴ����߳�
-notifyAll�������ڸö���ȴ��������߳�
-toString��ת���ַ���
+4. Object有哪些公用方法？
+答:
+clone,实现对象的浅复制
+equals，子类需要重写该方法
+hashCode，实现哈希查找
+getClass，final方法，获得运行时类型
+wait，一直等待，直到获取该对象的锁
+notify，唤醒在该对象等待的线程
+notifyAll，唤醒在该对象等待的所有线程
+toString，转成字符串
 
 
-5. Java���������ã�ǿ�����飬�õ��ĳ�����
-��:
-ǿ���ã����һ���������ǿ���ã�������������Ը�׳�OutOfMemoryError��Ҳ������л���
+5. Java的四种引用，强弱软虚，用到的场景。
+答:
+强引用：如果一个对象具有强引用，垃圾回收器宁愿抛出OutOfMemoryError，也不会进行回收
 	eg:Object obj=new Object();
-�ܽ᣺����ǿ���ã�obj=null;
+总结：弱化强引用：obj=null;
 
-�����ã�����ڴ�ռ��㹻���򲻻�������ý��л��գ�һ���ڴ�ռ䲻�㣬�ͻ�������ý���
-����
-	eg:String str=new String("abc");//ǿ����
-	SoftReference<String> soft =new SoftReference<String>(str);//������
+软引用：如果内存空间足够，则不会对软引用进行回收，一旦内存空间不足，就会对软引用进行
+回收
+	eg:String str=new String("abc");//强引用
+	SoftReference<String> soft =new SoftReference<String>(str);//软引用
 
 
-�����ã��������������õ��������ڣ�ֻ���������õĶ���ӵ�и����ݵ��������ڣ�����
-	�ڴ�ռ��Ƿ���㣬ֻҪ�����������þͻ���л���
+弱引用：弱引用与软引用的区别在于：只具有弱引用的对象拥有更短暂的生命周期，不管
+	内存空间是否充足，只要发现是弱引用就会进行回收
 
-	eg:String str=new String("abc");//ǿ����
-	WeakReference<String> soft =new WeakReference<String>(str);//������
+	eg:String str=new String("abc");//强引用
+	WeakReference<String> soft =new WeakReference<String>(str);//软引用
 	str=null;
 
 
-�����ã���������Ҫ�������ٶ����������������յĻ���������������á������õ�һ��
-	�������������ñ�������ö�������ʹ��
+虚引用：虚引用主要用来跟踪对象被垃圾回收器回收的活动，虚引用与软引用、弱引用的一个
+	区别在于虚引用必须和引用队列联合使用
 
 
-6. Hashcode�����á�
-��:
-hashCode��Ҫ���ڲ��ҵĿ���ԣ�hashCode������ɢ�д洢�ṹ��ȷ������洢�ĵ�ַ
+6. Hashcode的作用。
+答:
+hashCode主要用于查找的快捷性，hashCode是用来散列存储结构中确定对象存储的地址
 
 
-7. ArrayList��LinkedList��Vector������
-��:
-ArrayList��vector�������鷽ʽ�洢���ݣ���������Ҫ������Ԫ�ؽ����ƶ�
-�����Բ����ٶ�������ѯ�ٶȿ�
-LinkedList����˫�������洢�������������Ҫ������ǰ���������������ٶ���
-���ǲ�������ֻ���¼ǰ����ɣ������ٶȿ�
-vector����ͬ���������̰߳�ȫ���������ܱ�ArrayList��
+7. ArrayList、LinkedList、Vector的区别。
+答:
+ArrayList和vector采用数组方式存储数据，插入数据要对数组元素进行移动
+，所以插入速度慢，查询速度快
+LinkedList采用双向链表存储，按序号索引需要进行向前或向后遍历，查找速度慢
+但是插入数据只需记录前后项即可，插入速度快
+vector采用同步方法，线程安全，但是性能比ArrayList差
 
 
-8. String��StringBuffer��StringBuilder������
-��:
-String �ַ���������
-ע�⣺String���󲻿ɸı䣬�����ǿ�����String���ݷ����ı�ʱ����ʵ����jvm����new��һ��String
-����Ȼ����µ�����ָ���µĵ�ַ�����Ծ����ı���ַ�����Ҫʹ��String
-StringBuffer �ַ����������̰߳�ȫ��
-StringBuilder �ַ������������̰߳�ȫ��
+8. String、StringBuffer与StringBuilder的区别。
+答:
+String 字符串常量，
+注意：String对象不可改变，而我们看到的String内容发生改变时，其实就是jvm重新new了一个String
+对象，然后把新的内容指向新的地址，所以经常改变的字符串不要使用String
+StringBuffer 字符串变量（线程安全）
+StringBuilder 字符串变量（非线程安全）
 
 
-9. Map��Set��List��Queue��Stack���ص����÷���
-��:
-Map:Map���ڱ������"ӳ���ϵ"������,Map������key�ظ�������map��key��value������NULL
-Set:Set�̳���Collection�ӿڣ����ܰ������ظ�Ԫ�أ����������
-List:List���ϴ���һ��Ԫ�����򡢿��ظ��ļ��ϣ�������ÿ��Ԫ�ض������Ӧ��˳������
-Queue:Queue����ģ��"����"�������ݽṹ(�Ƚ��ȳ� FIFO),���в�����������ʶ����е�Ԫ��
-Stack:Stack��Vector�ṩ��һ�����࣬����ģ��"ջ"�������ݽṹ(LIFO����ȳ�)
+9. Map、Set、List、Queue、Stack的特点与用法。
+答:
+Map:Map用于保存具有"映射关系"的数据,Map不允许key重复，但是map的key和value可以是NULL
+Set:Set继承自Collection接口，不能包含有重复元素，且是无序的
+List:List集合代表一个元素有序、可重复的集合，集合中每个元素都有其对应的顺序索引
+Queue:Queue用于模拟"队列"这种数据结构(先进先出 FIFO),队列不允许随机访问队列中的元素
+Stack:Stack是Vector提供的一个子类，用于模拟"栈"这种数据结构(LIFO后进先出)
 
 
-10. HashMap��HashTable������
-��:
-HashMap�̳��Գ�����AbstractMap����HashTable�̳��Գ�����Dictionary
-HashMap��֧��null����nullֵ�ģ���HashTable������nullʱ�����׳�NullPointerException�쳣
+10. HashMap和HashTable的区别。
+答:
+HashMap继承自抽象类AbstractMap，而HashTable继承自抽象类Dictionary
+HashMap是支持null键和null值的，而HashTable在遇到null时，会抛出NullPointerException异常
 
 
-11. HashMap��ConcurrentHashMap������HashMap�ĵײ�Դ�롣
-��:
-hashMap�ı��������������������keyȡ��hashֵ��Ȼ������������±꣬
-������key��Ӧͬһ���±꣬�����������������¼ӵ���ǰ��
-hashMap����ʹ�� null ֵ�� null ��
-HashMap��һ������������Ľṹ��Hash Map�Ǹ���key����ȡhashֵ�����洢�Ķ���϶��ʱ�򣬲�ͬ��������ݴ洢��hashֵ�Ϳ��ܳ�ͻ���������ͻ�İ취����
-HashMap��ʵ����һ��Entry���飬Entry�����а����˼���ֵ������nextҲ��һ��Entry������������������hash��ͻ�ģ��γ�һ��������
-java8�����������Entry���󳬹�8���ͻ��Զ�ת��Ϊ������ṹ
+11. HashMap和ConcurrentHashMap的区别，HashMap的底层源码。
+答:
+hashMap的本质是数组加链表，根据key取得hash值，然后计算出数组的下标，
+如果多个key对应同一个下标，就用链表串起来，新加的在前面
+hashMap允许使用 null 值和 null 键
+HashMap是一个数组加链表的结构，Hash Map是根据key来获取hash值，当存储的对象较多的时候，不同对象的数据存储的hash值就可能冲突，而解决冲突的办法就是
+HashMap其实就是一个Entry数组，Entry对象中包含了键和值，其中next也是一个Entry对象，它就是用来处理hash冲突的，形成一个链表。
+java8中如果数组中Entry对象超过8个就会自动转化为红黑树结构
 
-ConcurrentHashMap����hashMap�Ļ����ϣ�ConcurrentHashMap�����ݷ�Ϊ���segment(����hashtable)��Ĭ��16����concurrency level����Ȼ����ÿһ���ֶ��϶��������б������Ӷ����������ȸ���ϸһЩ���������ܸ��á�
-ֻ��ConcurrentHashMap�ڻ�ȡֵ��ʱ����Ҫ�������ζ�λ����һ����Ҫͨ��hash��λ��Segment��Ȼ��
-��hash��λ��ָ����HashEntry,������hashEntry��ֵ���ɹ��ͷ��أ������null
+ConcurrentHashMap：在hashMap的基础上，ConcurrentHashMap将数据分为多个segment(类似hashtable)，默认16个（concurrency level），然后在每一个分段上都用锁进行保护，从而让锁的粒度更精细一些，并发性能更好。
+只是ConcurrentHashMap在获取值的时候需要进行两次定位，第一次需要通过hash定位到Segment，然后
+再hash定位到指定的HashEntry,遍历该hashEntry的值，成功就返回，否则就null
 
-12. TreeMap��HashMap��LindedHashMap������
-��:
-TreeMapĬ�϶����ݽ�����������
-HashMapʹ�õ���࣬key��value����nullֵ
-LindedHashMap�����˼�¼�Ĳ���˳��ͨ������������ʱ�ȵõ����²����
-
-
-13. Collection���ṹ����Collections������
-��:
-Collection�Ǽ�������ϼ��ӿڣ���Ҫ�̳еļ�������list��set
-Collections����Լ������ṩ��һ�������࣬�ṩ��һϵ�еľ�̬����
+12. TreeMap、HashMap、LindedHashMap的区别。
+答:
+TreeMap默认对数据进行升序排序
+HashMap使用得最多，key和value允许null值
+LindedHashMap保存了记录的插入顺序，通过迭代器遍历时先得到最新插入的
 
 
-14. try catch finally��try����return��finally��ִ��ô��
-��:
-ִ�У���ִ��return�����ǻ�û�н����ݷ��أ�ת��ȥִ��finally������ִ��������ݷ���
+13. Collection包结构，与Collections的区别。
+答:
+Collection是集合类的上级接口，主要继承的集合类有list和set
+Collections是针对集合类提供的一个帮助类，提供了一系列的静态方法
 
 
-15. Excption��Error���ṹ��OOM���ڴ����������������Щ�����SOF����ջ���������������Щ�����
-��:
-Throwable������������: Error �� Exception ������ͨ������ָʾ�������쳣���
-
-OOM:����OutOfMemoryError���ڴ�����쳣���쳣�ĳ���ԭ�������¼��֣�
-1���ڴ��м��ص������������Ӵ���һ�δ����ݿ�ȡ���������ݣ�
-2�����������жԶ�������ã�ʹ�����δ��գ�ʹ��JVM���ܻ��գ�
-3�������д�����ѭ����ѭ�����������ظ��Ķ���ʵ�壻
-4��ʹ�õĵ����������е�BUG��
-5�����������ڴ�ֵ�趨�Ĺ�С��
-
-SOF: ��Ӧ�ó���ݹ�̫���������ջ���StackOverflow:ʱ���׳��ô��󡣶�ջ���StackOverflow��ԭ��
-1���ݹ����
-2������ѭ������ѭ��
-3��ȫ�ֱ����Ƿ����
-4�����顢List��map���ݹ���
+14. try catch finally，try里有return，finally还执行么？
+答:
+执行，先执行return，但是还没有将数据返回，转而去执行finally方法，执行完后将数据返回
 
 
-16. Java�����������������뺬�塣
-��:
-1����װ
-2���̳�
-3����̬
-��̬���ڵ�������Ҫ����
-һ��Ҫ�м̳У�
-����Ҫ����д��
-������������ָ���������
-ʹ�ø������͵�����ָ������Ķ���ʱ��
-1��������ֻ�ܵ��ø����ж���ķ����ͱ����� 
-2�������������д�˸����е�һ����������ô�ڵ������������ʱ�򣬽�����������е��������������̬���ӡ���̬���ã�
+15. Excption与Error包结构。OOM（内存溢出）你遇到过哪些情况，SOF（堆栈溢出）你遇到过哪些情况。
+答:
+Throwable包含两个子类: Error 和 Exception 。它们通常用于指示发生了异常情况
+
+OOM:导致OutOfMemoryError（内存溢出异常）异常的常见原因有以下几种：
+1、内存中加载的数据量过于庞大，如一次从数据库取出过多数据；
+2、集合类中有对对象的引用，使用完后未清空，使得JVM不能回收；
+3、代码中存在死循环或循环产生过多重复的对象实体；
+4、使用的第三方软件中的BUG；
+5、启动参数内存值设定的过小；
+
+SOF: 当应用程序递归太深而发生堆栈溢出StackOverflow:时，抛出该错误。堆栈溢出StackOverflow的原因：
+1、递归调用
+2、大量循环或死循环
+3、全局变量是否过多
+4、数组、List、map数据过大
 
 
-17. Override��Overload�ĺ���ȥ����
-��:
-Override����д��������̳и��࣬��д����ķ���
-Overload�����أ���ͬһ���е�ͬһ�����������ǲ�ͬ������������˳��ͬ
+16. Java面向对象的三个特征与含义。
+答:
+1、封装
+2、继承
+3、多态
+多态存在的三个必要条件
+一、要有继承；
+二、要有重写；
+三、父类引用指向子类对象。
+使用父类类型的引用指向子类的对象时，
+1、该引用只能调用父类中定义的方法和变量； 
+2、如果子类中重写了父类中的一个方法，那么在调用这个方法的时候，将会调用子类中的这个方法；（动态连接、动态调用）
 
 
-18. Interface��abstract�������
-��:
-1. ����������й��췽�����ӿڲ����й��췽�� 
-2. �������п�������ͨ��Ա�������ӿ���û����ͨ��Ա���� 
-3. �������п��԰����ǳ������ͨ�������ӿ��е����з��������ǳ���ģ������зǳ������ͨ���� 
-4. �������г��󷽷��ķ������Ϳ�����public��protected��Ĭ��������Ȼ��eclipse�²���������Ӧ��Ҳ���У������ӿ��еĳ��󷽷�ֻ����public���ͣ�����Ĭ�ϼ�Ϊpublic abstract���� 
-5. �������п��԰�����̬�������ӿ��в��ܰ�����̬���� 
-6. ������ͽӿ��ж����԰�����̬��Ա�������������еľ�̬��Ա�����ķ������Ϳ������⣬���ӿ��ж���ı���ֻ����public static final���ͣ�����Ĭ�ϼ�Ϊpublic static final���� 
-7. һ�������ʵ�ֶ���ӿڣ���ֻ�ܼ̳�һ��������
+17. Override和Overload的含义去区别。
+答:
+Override（重写）：子类继承父类，重写父类的方法
+Overload（重载）：同一类中的同一方法名，但是不同参数，个数、顺序不同
 
 
-19. Static class ��non static class������
-��
-Static class�������ζ����ֻ࣬���ڲ������Ϊstatic class
-��1���ڲ���̬�಻��Ҫ��ָ���ⲿ������á����Ǿ�̬�ڲ�����Ҫ���ж��ⲿ������á�
-// ������̬�ڲ����ʵ��OuterClass.NestedStaticClass printer = new OuterClass.NestedStaticClass();
-// �����Ǿ�̬�ڲ����ʵ��OuterClass.InnerClass innerObject = new OuterClass().new InnerClass();
-
-��2���Ǿ�̬�ڲ����ܹ������ⲿ��ľ�̬�ͷǾ�̬��Ա����̬�಻�ܷ����ⲿ��ķǾ�̬��Ա����ֻ�ܷ����ⲿ��ľ�̬��Ա��
-��3��һ���Ǿ�̬�ڲ��಻�������ⲿ��ʵ�屻������һ���Ǿ�̬�ڲ�����Է����ⲿ������ݺͷ�������Ϊ�������ⲿ�����档
-
-
-20. java��̬��ʵ��ԭ����
-��
-��̬�ĸ��ͬһ���������ڲ�ͬ���󣬿����в�ͬ�Ľ��ͣ��в�ͬ��ִ�н��������Ƕ�̬������˵���ǣ����������ָ���������
-
-21. ʵ�ֶ��̵߳����ַ�����Thread��Runable��
-
-22. �߳�ͬ���ķ�����sychronized��lock��reentrantLock�ȡ�
-
-23. ���ĵȼ�������������������������
-
-24. д��������������ģʽ��
-��
-��������һ���̣߳�����������һ���̣߳��ڴ滺����Ϊ�յ�ʱ�������߱���ȴ���
-���ڴ滺��������ʱ�������߱���ȴ�������ʱ������Ǹ���̬ƽ��
+18. Interface与abstract类的区别。
+答:
+1. 抽象类可以有构造方法，接口不能有构造方法 
+2. 抽象类中可以有普通成员变量，接口中没有普通成员变量 
+3. 抽象类中可以包含非抽象的普通方法，接口中的所有方法必须是抽象的，不能有非抽象的普通方法 
+4. 抽象类中抽象方法的访问类型可以是public，protected和默认类型虽然（eclipse下不报错，但应该也不行），但接口中的抽象方法只能是public类型，并且默认即为public abstract类型 
+5. 抽象类中可以包含静态方法，接口中不能包含静态方法 
+6. 抽象类和接口中都可以包含静态成员变量，抽象类中的静态成员变量的访问类型可以任意，但接口中定义的变量只能是public static final类型，并且默认即为public static final类型 
+7. 一个类可以实现多个接口，但只能继承一个抽象类
 
 
-25. ThreadLocal��������������á�
-��
-Java�е�ThreadLocal���������Ǵ���ֻ�ܱ�ͬһ���̶߳�д�ı�������ͬ�̶߳�дThreadLocal��ֻ�ܶ�д����set��ֵ
+19. Static class 与non static class的区别。
+答：
+Static class不能修饰顶级类，只有内部类可以为static class
+（1）内部静态类不需要有指向外部类的引用。但非静态内部类需要持有对外部类的引用。
+// 创建静态内部类的实例OuterClass.NestedStaticClass printer = new OuterClass.NestedStaticClass();
+// 创建非静态内部类的实例OuterClass.InnerClass innerObject = new OuterClass().new InnerClass();
+
+（2）非静态内部类能够访问外部类的静态和非静态成员。静态类不能访问外部类的非静态成员。他只能访问外部类的静态成员。
+（3）一个非静态内部类不能脱离外部类实体被创建，一个非静态内部类可以访问外部类的数据和方法，因为他就在外部类里面。
 
 
-26. ThreadPool�÷������ơ�
+20. java多态的实现原理。
+答：
+多态的概念：同一操作作用于不同对象，可以有不同的解释，有不同的执行结果，这就是多态，简单来说就是：父类的引用指向子类对象
+
+21. 实现多线程的两种方法：Thread与Runable。
+
+22. 线程同步的方法：sychronized、lock、reentrantLock等。
+
+23. 锁的等级：方法锁、对象锁、类锁。
+
+24. 写出生产者消费者模式。
+答：
+生产者是一堆线程，消费者是另一堆线程，内存缓冲区为空的时候消费者必须等待，
+而内存缓冲区满的时候，生产者必须等待。其他时候可以是个动态平衡
 
 
-27. Concurrent���������������ArrayBlockingQueue��CountDownLatch�ȵȡ�
-��
-CountDownLatch�� ����������һ���߳��еȴ�����߳����������ࣻ  
-ͨ����ʹ�ó����ǣ�ĳ�����߳̽ӵ�һ����������n�����߳�ȥ��ɣ��������߳���Ҫ�ȴ���n�����̶߳�����������Ժ�ſ�ʼִ��ĳ��������  
+25. ThreadLocal的设计理念与作用。
+答：
+Java中的ThreadLocal类允许我们创建只能被同一个线程读写的变量，不同线程读写ThreadLocal类只能读写自身set的值
 
 
-28. wait()��sleep()������
-��
-sleep����ͣ����ִ��ָ��ʱ��,�����ͷŶ�����
-wait:�̻߳�����������������̳߳صȴ����ȴ��ö����notify����
+26. ThreadPool用法与优势。
 
 
-29. foreach������forѭ��Ч�ʶԱȡ�
-��
-��Ҫѭ������ṹ������ʱ������ʹ����ͨforѭ������Ϊforѭ�������±���ʣ���������ṹ��������˵�������±���ʱȽϺá�
-��Ҫѭ�������ṹ������ʱ��һ����Ҫʹ����ͨforѭ����������������⣬���������ʱ���п��ܻᵼ��ϵͳ����
+27. Concurrent包里的其他东西：ArrayBlockingQueue、CountDownLatch等等。
+答：
+CountDownLatch， 可以用来在一个线程中等待多个线程完成任务的类；  
+通常的使用场景是，某个主线程接到一个任务，起了n个子线程去完成，但是主线程需要等待这n个子线程都完成任务了以后才开始执行某个操作；  
 
 
-30. Java IO��NIO��
-��
-IO���������ģ�NIO�����򻺳���
-IO���������ģ�NIO���ǲ�������
+28. wait()和sleep()的区别。
+答：
+sleep：暂停程序执行指定时间,不会释放对象锁
+wait:线程会放弃对象锁，进入线程池等待，等待该对象的notify唤醒
 
 
-31. �����������ԭ����
-�𣺷����ԭ����Java�ķ���������ڱ��벢��ȷ�����ĸ��౻������
-�������ã������������໥���������ֿ�������û���������������½��з�����Ƶĵ��ԣ�
-Java������ƾ͵�ʹ��java.lang.Class��ͨ�����Class�������Ǿ��ܻ�ü��ص�������������Class�����Ӧ�ķ�������Ա�Լ����췽��
+29. foreach与正常for循环效率对比。
+答：
+需要循环数组结构的数据时，建议使用普通for循环，因为for循环采用下标访问，对于数组结构的数据来说，采用下标访问比较好。
+需要循环链表结构的数据时，一定不要使用普通for循环，这种做法很糟糕，数据量大的时候有可能会导致系统崩溃
 
 
-32. ���ͳ����ص㣬List<String>�ܷ�תΪList<Object>��
-��
-�ص㣺���ϴ洢�Ķ�����ʹ��ǰ��Ҫ��������ת���������ͷ�ֹ���������
-�ô���ȷ��������ȷ�����Ͷ��󣬱����������ǳ���ClassCastException,����ת���쳣
-������תΪList<Object>,��ΪList<Object>���Դ洢��ͬ���������ݣ���Stringֻ�ܴ洢String����
+30. Java IO与NIO。
+答：
+IO是面像流的，NIO是面向缓冲区
+IO流是阻塞的，NIO流是不阻塞的
 
 
-33. ����XML�ļ��ַ�ʽ��ԭ�����ص㣺DOM��SAX��PULL��
-34. Java��C++�Աȡ�
-35. Java1.7��1.8�����ԡ�
-36. ���ģʽ�������������������������������۲��ߵȵȡ�
-37. JNI��ʹ�á�
+31. 反射的作用与原理。
+答：反射的原理：Java的反射机制是在编译并不确定是哪个类被加载了
+反射作用：举例把两个相互依赖对象拆分开来，在没有依赖对象的情况下进行反射机制的调试，
+Java反射机制就得使用java.lang.Class，通过这个Class对象我们就能获得加载到虚拟机当中这个Class对象对应的方法、成员以及构造方法
 
-38��Java��List<?>��List<Object>֮���������ʲô?
-��
-ʵ����ȴ��ȫ��ͬ��List<?> ��һ��δ֪���͵�List����List<Object> ��ʵ���������͵�List��
-����԰�List<String>, List<Integer>��ֵ��List<?>��ȴ���ܰ�List<String>��ֵ�� List<Object>
 
-39��List��Set��Map������
-��
-1��List��Set���Ǽ̳�Collection�ӿڣ���Map����
-2��List������ģ����ظ�����Set������ģ������ظ�
-3��List֧��forѭ��������Setֻ��ͨ��itertor��������ΪSet���������޷�ʹ���±�
-4��List��ѯЧ�ʸߣ������ɾ��Ч�ʵͣ���Ϊ������λ��Ԫ�ظı�
-Set��ѯЧ�ʵͣ������ɾ��Ч�ʸߣ���Ϊ��������λ��Ԫ�ظı�
-5��Map�洢��ֵ�Ե����ݣ�HashMapʵ���㷨�ǹ�ϣ����ʵ�ֵ����ݽṹ�����������飩
-6��LinkedList��ArrayList��HashSet�Ƿ��̰߳�ȫ�ģ�Vector���̰߳�ȫ��;
-HashMap�Ƿ��̰߳�ȫ�ģ�HashTable���̰߳�ȫ��;
-StringBuilder�Ƿ��̰߳�ȫ�ģ�StringBuffer���̰߳�ȫ�ġ�
+32. 泛型常用特点，List<String>能否转为List<Object>。
+答：
+特点：集合存储的对象在使用前需要进行类型转换，而泛型防止了这种情况
+好处：确保放入正确的类型对象，避免在运行是出现ClassCastException,类型转换异常
+不可以转为List<Object>,因为List<Object>可以存储不同的类型数据，而String只能存储String类型
 
-40����дequalsΪ��Ҫ��дhashCode��
-��
-�ж����������Ƿ���ȣ��Ƚϵľ�����hashCode, �����������equals������˵�ǻ��ڶ��������ʵ�ֵģ�������hashCode��ʵ�ֲ��䣬��ô�ܿ���ĳ�������������ǡ���ȡ�����hashCodeȴ��һ����  hashcode��һ�������޷��϶��������������
 
-41��HashMap��Java1.7��1.8�е�����
-��
-1��1.7�е�hashMapʹ��һ��Entry������д洢����key��hashcodeȡģ�����������ŵ�λ�ã���������hashcode��ͬһ��λ�ã���
-���ṹת���������ṹ�洢���������ҿ���O��n����
-2��1.8��hashMapʹ��һ��node������д洢��Ҳ����key��hashcodeȡģ�����������ŵ�λ�ã����value������8���ͻ��������ṹ�洢
-���������8���ͻᴥ��treefibin������ת��Ϊ���������������ҿ���O��log n����
+33. 解析XML的几种方式的原理与特点：DOM、SAX、PULL。
+34. Java与C++对比。
+35. Java1.7与1.8新特性。
+36. 设计模式：单例、工厂、适配器、责任链、观察者等等。
+37. JNI的使用。
 
-42�����ʵ�������̣�
-��
-1�������static����飬��ǰ���static
-2����ִ�и������ͨ�����
-3������Ĺ��캯��
-4���������ͨ�����
-5����ǰ��Ĺ��캯��
-6�����෽��ִ��
+38、Java中List<?>和List<Object>之间的区别是什么?
+答：
+实质上却完全不同。List<?> 是一个未知类型的List，而List<Object> 其实是任意类型的List。
+你可以把List<String>, List<Integer>赋值给List<?>，却不能把List<String>赋值给 List<Object>
 
-43��HashSet ����α�֤���ظ��ģ�
-��
-hashset�Ĺ��췽ʽ�ڲ�ʵ����hashMap,hashMap��key�ǲ����ظ��ģ�hashSet��Ԫ����ΪhashMap��key��ע����дhash��equit����
+39、List和Set、Map的区别？
+答：
+1、List和Set都是继承Collection接口，而Map不是
+2、List是有序的，可重复，而Set是无序的，不可重复
+3、List支持for循环变量，Set只能通过itertor迭代，因为Set无序所以无法使用下标
+4、List查询效率高，插入和删除效率低，因为会引起位置元素改变
+Set查询效率低，插入和删除效率高，因为不会引起位置元素改变
+5、Map存储建值对的数据（HashMap实现算法是哈希表，实现的数据结构是链表与数组）
+6、LinkedList、ArrayList、HashSet是非线程安全的，Vector是线程安全的;
+HashMap是非线程安全的，HashTable是线程安全的;
+StringBuilder是非线程安全的，StringBuffer是线程安全的。
 
-44�����ؾ���Ĳ�ͬ��ʽ��
-��
-1��HTTP�ض���ʵ�ָ��ؾ��⣨�������ѯ������Ҫһ̨���ؾ�����������û������������
-����������Ӧ�÷�����ip��װ��head����ͷ���ڶ�����Ӧ�÷������������󲢷��ؽ��
-2��DNS���ؾ��⣨�������ѯ������Ҫһ̨DNS��������������������������Ҫ����ת��Ϊip��ַ��Ȼ�󷵻ظ��û����û�����
-��ip���������
-3������������ؾ��⣨apache��nginx��lvs��HAProxy�ȵȣ�����HTTP�ض�������ܹ����غ�˷�������
+40、重写equals为何要重写hashCode？
+答：
+判断两个对象是否相等，比较的就是其hashCode, 如果你重载了equals，比如说是基于对象的内容实现的，而保留hashCode的实现不变，那么很可能某两个对象明明是“相等”，而hashCode却不一样。  hashcode不一样，就无法认定两个对象相等了
 
-45��notify��notifyAll����
-���ǵ����ö���֪ͨ���ڵȴ��ö�����̡߳�
-1��notifyAllʹ����ԭ���ڸö����ϵȴ���notify���߳�ͳͳ�˳�wait��״̬����ɵȴ��ö����ϵ�����һ���ö��󱻽��������Ǿͻ�ȥ������
-2��notify��֪ͨ����һ���̣߳�����֪ͨ���е��̡߳�
+41、HashMap在Java1.7与1.8中的区别
+答：
+1、1.7中的hashMap使用一个Entry数组进行存储，用key的hashcode取模来决定数组存放的位置，如果计算的hashcode是同一个位置，就
+将结构转成了链表结构存储（链表查找开销O（n））
+2、1.8的hashMap使用一个node数组进行存储，也是用key的hashcode取模来决定数组存放的位置，如果value不超过8个就还是链表结构存储
+，如果超过8个就会触发treefibin函数，转换为红黑树（红黑树查找开销O（log n））
+
+42、类的实例化过程？
+答：
+1、父类的static代码块，当前类的static
+2、再执行父类的普通代码块
+3、父类的构造函数
+4、子类的普通代码块
+5、当前类的构造函数
+6、子类方法执行
+
+43、HashSet 是如何保证不重复的？
+答：
+hashset的构造方式内部实例是hashMap,hashMap的key是不能重复的，hashSet把元素作为hashMap的key。注意重写hash和equit方法
+
+44、负载均衡的不同方式？
+答：
+1、HTTP重定向实现负载均衡（随机、轮询）：需要一台负载均衡服务器，用户请求服务器，
+服务器返回应用服务器ip封装进head请求头，第二次向应用服务器发送请求并返回结果
+2、DNS负载均衡（随机、轮询）：需要一台DNS域名解析服务器，域名访问需要将其转化为ip地址，然后返回给用户，用户再向
+该ip发起访问你
+3、反向代理负载均衡（apache、nginx、lvs、HAProxy等等）：与HTTP重定向相比能够隐藏后端服务器，
+
+45、notify和notifyAll区别
+他们的作用都是通知处于等待该对象的线程。
+1、notifyAll使所有原来在该对象上等待被notify的线程统统退出wait的状态，变成等待该对象上的锁，一旦该对象被解锁，他们就会去竞争。
+2、notify是通知其中一个线程，不会通知所有的线程。
 
 

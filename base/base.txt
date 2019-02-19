@@ -72,8 +72,8 @@ vector采用同步方法，线程安全，但是性能比ArrayList差
 String 字符串常量，
 注意：String对象不可改变，而我们看到的String内容发生改变时，其实就是jvm重新new了一个String
 对象，然后把新的内容指向新的地址，所以经常改变的字符串不要使用String
-StringBuffer 字符串变量（线程安全）
-StringBuilder 字符串变量（非线程安全）
+StringBuffer 字符串变量（线程安全）适用于多线程下字符缓冲区的大量操作
+StringBuilder 字符串变量（非线程安全）适用于单线程下字符缓冲区的大量操作
 
 
 9. Map、Set、List、Queue、Stack的特点与用法。

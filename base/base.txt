@@ -100,7 +100,8 @@ HashMap是一个数组加链表的结构，Hash Map是根据key来获取hash值�
 HashMap其实就是一个Entry数组，Entry对象中包含了键和值，其中next也是一个Entry对象，它就是用来处理hash冲突的，形成一个链表。
 java8中如果数组中Entry对象超过8个就会自动转化为红黑树结构
 
-ConcurrentHashMap：在hashMap的基础上，ConcurrentHashMap将数据分为多个segment(类似hashtable)，默认16个（concurrency level），然后在每一个分段上都用锁进行保护，从而让锁的粒度更精细一些，并发性能更好。
+ConcurrentHashMap：在hashMap的基础上，ConcurrentHashMap将数据分为多个segment(类似hashtable)，默认16个（concurrency level），
+然后在每一个分段上都用锁进行保护，从而让锁的粒度更精细一些，并发性能更好。
 只是ConcurrentHashMap在获取值的时候需要进行两次定位，第一次需要通过hash定位到Segment，然后
 再hash定位到指定的HashEntry,遍历该hashEntry的值，成功就返回，否则就null
 
